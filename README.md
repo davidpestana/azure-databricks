@@ -63,6 +63,12 @@
 - [Ejecutar un script básico de Spark para contar líneas en un archivo de texto](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_Apache_Spark/Laboratorio_script_basico_Spark.md)
 - [Monitorización de tareas y debugging en Spark](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_Apache_Spark/Laboratorio_monitorizacion_Spark.md)
 
+#### Recursos:
+- [Anexo de recursos para los laboratorios](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_Apache_Spark/Anexo_de_recursos.md)
+
+- [Anexo configuración de almacenamiento](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_Apache_Spark/Anexo_de_configuracion_almacenamiento.md)
+
+
 ### Introducción a PySpark
 
 #### Teoría:
@@ -74,6 +80,9 @@
 - [Configurar un notebook de Databricks para usar PySpark](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_PySpark/Laboratorio_configurar_notebook_PySpark.md)
 - [Ejecutar operaciones básicas con RDDs (Resilient Distributed Datasets)](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_PySpark/Laboratorio_operaciones_basicas_RDDs.md)
 - [Creación y manipulación de DataFrames](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_PySpark/Laboratorio_creacion_manipulacion_DataFrames.md)
+
+#### Recursos:
+- [Anexo generador de recursos](./Modulo2_Fundamentos_Apache_Spark_PySpark/Introduccion_PySpark/generador_de_recursos.md)
 
 ### DataFrames y SQL en PySpark
 
@@ -88,6 +97,9 @@
 - [Realizar operaciones de selección, filtrado y agrupación en el DataFrame](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Laboratorio_operaciones_DataFrame.md)
 - [Ejecutar consultas SQL en el DataFrame y visualizar los resultados](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Laboratorio_SQL_DataFrame.md)
 - [Optimizar y ejecutar consultas complejas](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Laboratorio_optimizacion_consultas_complejas.md)
+
+#### Recursos:
+- [Anexo generador de recursos masivos](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/generador_recursos.md)
 
 ## Módulo 3: Introducción a Python
 
