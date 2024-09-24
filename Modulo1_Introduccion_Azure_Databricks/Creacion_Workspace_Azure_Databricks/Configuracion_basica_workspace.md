@@ -89,6 +89,97 @@ Una vez creado el **recurso de Azure Databricks**, el siguiente paso es realizar
    **Recomendaciones**:
    - Utiliza **Azure Key Vault** para gestionar de manera segura las credenciales de almacenamiento.
    - Si trabajas con grandes volúmenes de datos, utiliza **ADLS Gen2**, que está optimizado para cargas de trabajo de Big Data.
+---
+
+El **"modo de acceso"** en Azure Databricks se refiere a cómo los usuarios y los trabajos interactúan con el clúster de Spark. Este parámetro define los permisos y la forma en la que el clúster interactúa con los datos y otros servicios dentro de tu infraestructura. Existen varios modos de acceso, y cada uno tiene diferentes implicaciones en términos de seguridad, permisos y aislamiento. Veamos las opciones más comunes:
+
+### 1. **Modo de Acceso Estándar (Standard Mode)**:
+   - **Descripción**: Este es el modo predeterminado en el que los trabajos en un clúster tienen acceso completo a los datos, clústeres, y otros recursos dentro del workspace. Todos los usuarios que se conectan al clúster comparten el mismo contexto de Spark.
+   - **Implicaciones**:
+     - **Permisos compartidos**: Todos los usuarios que acceden al clúster pueden ejecutar trabajos y compartir el mismo espacio de trabajo dentro del clúster.
+     - **Seguridad limitada**: No hay aislamiento fuerte entre los trabajos de diferentes usuarios; pueden acceder y modificar recursos de Spark dentro del clúster que otros usuarios también están usando.
+     - **Uso típico**: Ideal para entornos colaborativos donde no es necesario un aislamiento estricto entre usuarios, como en un entorno de desarrollo compartido o una clase.
+   
+### 2. **Modo de Acceso Aislado (No Isolation Shared Mode)**:
+   - **Descripción**: Este modo es muy similar al "Modo Estándar", pero agrega algunos niveles de aislamiento entre los trabajos de diferentes usuarios. A pesar de que los trabajos comparten el mismo clúster, cada usuario tiene su propio contexto de ejecución de Spark (su propio driver).
+   - **Implicaciones**:
+     - **Aislamiento parcial**: Aunque el clúster es compartido, los trabajos de los usuarios se ejecutan en sus propios drivers, lo que proporciona un aislamiento básico.
+     - **Permisos independientes**: Cada trabajo tiene un control más individualizado sobre los recursos y datos.
+     - **Uso típico**: Útil en escenarios donde diferentes usuarios deben ejecutar trabajos en el mismo clúster pero requieren un poco más de control sobre sus propios trabajos, sin interferir con los trabajos de otros usuarios.
+   
+### 3. **Modo de Acceso con Red Privada (Single User Mode)**:
+   - **Descripción**: En este modo, el clúster está completamente aislado para un solo usuario. Nadie más puede acceder al clúster ni ejecutar trabajos en él. Está diseñado para situaciones donde se requiere un alto nivel de seguridad y aislamiento.
+   - **Implicaciones**:
+     - **Máximo aislamiento**: Solo un usuario tiene acceso al clúster. Nadie más puede interactuar o ejecutar trabajos en él, lo que asegura que no haya interferencia con los trabajos de otros usuarios.
+     - **Seguridad robusta**: Ideal para situaciones donde se manejan datos sensibles o cuando es necesario un alto nivel de control sobre la seguridad y el aislamiento de los recursos.
+     - **Uso típico**: Clústeres utilizados para trabajos con datos altamente sensibles, o cuando es necesario que el clúster esté dedicado a un solo usuario o trabajo.
+
+### 4. **Modo de Acceso con Aislamiento Completo (High Concurrency Mode)**:
+   - **Descripción**: Este modo es altamente seguro y está diseñado para casos en los que muchos usuarios se conectan simultáneamente al clúster. El aislamiento es fuerte, lo que significa que los trabajos de cada usuario se ejecutan en contextos completamente independientes.
+   - **Implicaciones**:
+     - **Máximo aislamiento y seguridad**: Cada trabajo o usuario está completamente aislado de los demás, con un entorno seguro. También mejora la capacidad del clúster para manejar múltiples trabajos simultáneamente.
+     - **Optimización para concurrencia**: Ideal para casos donde hay muchos usuarios ejecutando trabajos al mismo tiempo. Este modo optimiza los recursos del clúster para manejar múltiples peticiones simultáneas.
+     - **Uso típico**: Perfecto para entornos de producción en los que muchos usuarios acceden al mismo clúster con trabajos concurrentes, y donde el aislamiento y la seguridad son críticos.
+   
+### Resumen de Implicaciones según Modo de Acceso:
+
+| **Modo de Acceso**              | **Aislamiento**                           | **Seguridad**                             | **Escenario Ideal**                         |
+|----------------------------------|-------------------------------------------|-------------------------------------------|---------------------------------------------|
+| **Estándar (Standard Mode)**     | Bajo                                       | Limitada (contexto compartido)            | Entornos colaborativos o de desarrollo.     |
+| **Aislado (No Isolation)**       | Parcial                                    | Mejor que el estándar                     | Trabajo en equipo con más aislamiento.      |
+| **Red Privada (Single User)**    | Alto (aislado a un solo usuario)           | Alta seguridad                            | Trabajo individual o datos sensibles.       |
+| **Alta Concurrencia (High Concurrency)** | Alto (contextos completamente independientes) | Máxima seguridad y manejo de usuarios simultáneos | Producción y múltiples usuarios concurrentes. |
+
+### ¿Qué implica el "modo de acceso" para compartir entre workspaces?
+El modo de acceso no influye directamente en la capacidad de compartir clústeres entre diferentes workspaces de Databricks. Como mencionamos antes, los clústeres no pueden compartirse entre workspaces. El "modo de acceso" se refiere más a cómo se gestiona el acceso y la seguridad dentro de un mismo workspace y cómo los usuarios interactúan con los recursos de Spark en un clúster específico.
+
+En resumen, el **"modo de acceso"** define cómo los usuarios y los trabajos interactúan con los recursos del clúster dentro de un workspace, pero no permite compartir esos recursos entre diferentes workspaces de Databricks.
+
+---
+
+En **Azure Databricks**, los tres modos de cómputo — **Pools de Instancias**, **Cómputo Interactivo** (Clusters Interactivos) y **Cómputo de Trabajos** (Clusters de Jobs) — tienen propósitos y características específicos que los diferencian. Aquí te explico cada uno:
+
+### 1. **Pools de Instancias (Instance Pools)**:
+   - **Descripción**: Un **pool de instancias** es un grupo predefinido de máquinas virtuales que están en espera de ser asignadas a un clúster. Esto ayuda a reducir el tiempo de inicio de los clústeres al reutilizar instancias, en lugar de aprovisionar nuevas máquinas desde cero cada vez que se lanza un clúster.
+   - **Uso principal**: Optimizar el tiempo de arranque y los costos, especialmente cuando se lanzan muchos clústeres frecuentemente.
+   - **Ventajas**:
+     - **Arranque más rápido**: Los clústeres se inician más rápidamente porque las instancias ya están listas para ser usadas.
+     - **Ahorro de costos**: Puedes gestionar mejor los costos al compartir instancias entre varios clústeres.
+     - **Flexibilidad**: Permite la creación tanto de clústeres interactivos como de clústeres de trabajos con tiempos de inicio más cortos.
+   - **Aplicación**: Ideal cuando tienes muchos usuarios o cargas de trabajo que requieren la creación y destrucción frecuente de clústeres.
+
+### 2. **Cómputo Interactivo (Clusters Interactivos)**:
+   - **Descripción**: Son clústeres que se utilizan principalmente para **análisis exploratorios, desarrollo, pruebas** y uso interactivo de notebooks en Databricks. Estos clústeres permiten a los usuarios conectarse y trabajar de manera interactiva con los datos.
+   - **Uso principal**: Desarrollo, pruebas, exploración de datos y trabajo interactivo con notebooks.
+   - **Ventajas**:
+     - **Interacción en tiempo real**: Los usuarios pueden ejecutar consultas, scripts o notebooks y ver resultados en tiempo real.
+     - **Persistencia**: Un clúster interactivo puede permanecer activo para varias sesiones de trabajo, permitiendo a los usuarios reconectar en lugar de reiniciar el clúster.
+   - **Aplicación**: Perfecto para tareas de desarrollo y experimentación donde se requiere iterar y probar diferentes enfoques en tiempo real.
+
+### 3. **Cómputo de Trabajos (Clusters de Jobs)**:
+   - **Descripción**: Los clústeres de trabajos están diseñados para ejecutar **trabajos programados** o **tareas por lotes** (batch jobs) en Databricks. Estos clústeres generalmente se crean cuando se lanza un trabajo y se destruyen automáticamente cuando el trabajo ha finalizado.
+   - **Uso principal**: Ejecución de trabajos programados o por lotes, donde el clúster se puede crear y destruir de forma automatizada según sea necesario.
+   - **Ventajas**:
+     - **Eficiencia**: Los clústeres de trabajos se crean únicamente cuando son necesarios, lo que ayuda a reducir costos ya que no permanecen activos entre trabajos.
+     - **Escalabilidad**: Diseñado para ejecutar grandes volúmenes de datos o procesos automatizados de larga duración.
+   - **Aplicación**: Ideal para la automatización de procesos, pipelines de datos o trabajos ETL programados que se ejecutan de manera periódica o bajo demanda.
+
+### Diferencias clave:
+
+| Característica               | **Pool de Instancias**                | **Cómputo Interactivo**               | **Cómputo de Trabajos**               |
+|------------------------------|---------------------------------------|---------------------------------------|---------------------------------------|
+| **Propósito**                | Reducir tiempos de arranque y optimizar costos al reutilizar instancias. | Desarrollo y análisis interactivo con notebooks. | Ejecución de trabajos programados o por lotes. |
+| **Persistencia del clúster** | N/A (instancias reutilizables)         | Los clústeres pueden persistir entre sesiones. | Los clústeres se crean y destruyen por cada trabajo. |
+| **Tiempo de arranque**       | Muy rápido, ya que las instancias están listas. | Depende de la disponibilidad de máquinas, puede tardar más. | Se crean en el momento de la ejecución del trabajo, por lo que puede tardar más. |
+| **Costo**                    | Ahorro de costos mediante la reutilización de instancias. | Mayor costo si los clústeres se mantienen activos sin uso. | Ahorro de costos, ya que los clústeres se destruyen al finalizar el trabajo. |
+| **Aplicación típica**        | Entornos con alta demanda de clústeres con tiempos de inicio rápidos. | Desarrollo, experimentación y análisis interactivo. | Ejecución de trabajos ETL, pipelines de datos, o automatización de procesos. |
+
+### Resumen:
+- Si buscas **acelerar el tiempo de creación de clústeres** y reutilizar recursos, los **pools de instancias** son ideales.
+- Si necesitas **trabajar de manera interactiva** con datos en un entorno de notebooks, el **cómputo interactivo** es la mejor opción.
+- Si estás **ejecutando trabajos por lotes o programados**, el **cómputo de trabajos** es más adecuado, ya que permite crear y destruir clústeres en función de la ejecución del trabajo.
+
+Cada uno tiene su aplicación específica dependiendo de las necesidades de tu curso o proyecto.
 
 ---
 
