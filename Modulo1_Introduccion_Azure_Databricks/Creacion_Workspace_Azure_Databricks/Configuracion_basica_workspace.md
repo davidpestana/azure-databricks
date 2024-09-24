@@ -183,6 +183,35 @@ Cada uno tiene su aplicación específica dependiendo de las necesidades de tu c
 
 ---
 
+Para evitar costos innecesarios en **Azure Databricks** (o cualquier otro proveedor en la nube), lo recomendable es **parar** o **detener** los clústeres cuando no los estás utilizando activamente. Sin embargo, hay algunas consideraciones importantes a tener en cuenta:
+
+### Opción 1: **Parar (Stop) el Clúster**
+- **Costos asociados**: Cuando paras un clúster, los nodos de trabajo (las máquinas virtuales) se liberan y no generan costos por uso de recursos computacionales. Sin embargo, es posible que todavía tengas costos mínimos asociados al **almacenamiento persistente** del clúster, como los **discos de almacenamiento** que se mantienen asignados para guardar configuraciones del clúster o caché de datos.
+- **Ventaja**: Parar el clúster te permite reanudarlo rápidamente cuando lo necesites sin tener que volver a configurar todo desde cero.
+- **Desventaja**: Aunque los costos son significativamente menores que si el clúster estuviera corriendo, podrían seguir generándose costos mínimos por el almacenamiento.
+
+### Opción 2: **Eliminar (Delete) el Clúster**
+- **Costos asociados**: Eliminar un clúster destruye por completo los recursos asociados, por lo que no hay costos recurrentes ni por uso de máquinas virtuales ni por almacenamiento persistente.
+- **Ventaja**: No genera costos adicionales en absoluto una vez que el clúster es eliminado.
+- **Desventaja**: La próxima vez que necesites el clúster, tendrás que volver a crearlo y configurarlo desde cero, lo que puede llevar algo de tiempo.
+
+### Recomendación:
+- **Destruir el clúster** es la opción más efectiva si no planeas usarlo en un periodo prolongado.
+- Si solo necesitas un descanso temporal (unas horas o días), **pararlo** puede ser más conveniente para poder retomarlo rápidamente sin incurrir en costos computacionales elevados.
+
+Además, en Azure Databricks puedes configurar políticas de **auto-terminación** para los clústeres. Estas políticas permiten que los clústeres se apaguen automáticamente después de un periodo de inactividad, evitando costos innecesarios cuando se olvidan clústeres encendidos.
+
+```python
+# Ejemplo de configuración de auto-terminación (desde la consola de Azure Databricks)
+# Establece un tiempo de inactividad para que el clúster se termine automáticamente (en minutos).
+# Por ejemplo, 60 minutos de inactividad.
+```
+
+### En resumen:
+- **Parar** el clúster es suficiente para evitar la mayor parte de los costos, pero **destruir** el clúster elimina cualquier costo asociado, incluyendo el almacenamiento persistente.
+
+---
+
 ### Conclusión
 
 La **configuración básica del workspace** de Azure Databricks te permite personalizar y optimizar el entorno para tus necesidades de análisis de datos y procesamiento masivo. Al crear clústeres de Spark, gestionar permisos de acceso, instalar librerías adicionales y conectar sistemas de almacenamiento, puedes preparar tu entorno para ejecutar trabajos de análisis de datos y machine learning de manera eficiente y segura.
