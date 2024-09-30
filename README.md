@@ -87,6 +87,7 @@
 ### DataFrames y SQL en PySpark
 
 #### Teoría:
+- [DataFrames en Spark](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/DataFrames.md)
 - [Creación y manipulación de DataFrames](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Creacion_Manipulacion_DataFrames.md)
 - [Operaciones básicas](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Operaciones_basicas_DataFrames.md)
 - [Ejecución de consultas SQL](./Modulo2_Fundamentos_Apache_Spark_PySpark/DataFrames_SQL_PySpark/Ejecucion_consultas_SQL.md)
