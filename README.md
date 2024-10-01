@@ -188,7 +188,7 @@
 
 #### Laboratorio:
 - [Conectar Databricks con Azure Blob Storage](./Modulo5_Ingesta_Transformacion_Datos/Cargando_Datos_Azure_Databricks/Laboratorio_conexion_Blob_Storage.md)
-- [Leer datos desde un contenedor de Azure Blob Storage](./Modulo5_Ingesta_Transformacion_Datos/Cargando_Datos_Azure_Databricks/Laboratorio_lectura_Blob_Storage.md)
+- [Gestión de contenidos en un contenedor de Azure Blob Storage](./Modulo5_Ingesta_Transformacion_Datos/Cargando_Datos_Azure_Databricks/Contenidos_Blob_Storage.md)
 - [Ingesta de datos desde diferentes fuentes (bases de datos, APIs)](./Modulo5_Ingesta_Transformacion_Datos/Cargando_Datos_Azure_Databricks/Laboratorio_ingesta_datos.md)
 
 ### Transformación de Datos con PySpark
