@@ -236,6 +236,12 @@
 - [Algoritmos disponibles en MLlib](./Modulo6_Analisis_Datos_Machine_Learning/Introduccion_MLlib/Algoritmos_disponibles_MLlib.md)
 - [Casos de uso de MLlib en proyectos reales](./Modulo6_Analisis_Datos_Machine_Learning/Introduccion_MLlib/Casos_uso_MLlib.md)
 
+#### Laboratorio:
+- [Clasificación de Datos con MLlib](./Modulo6_Analisis_Datos_Machine_Learning/Introduccion_MLlib/Laboratorio_clasificacion_mllib.md)
+- [Regresión Lineal con MLlib](./Modulo6_Analisis_Datos_Machine_Learning/Introduccion_MLlib/Laboratorio_regresion_mllib.md)
+- [Clustering K-Means con MLlib](./Modulo6_Analisis_Datos_Machine_Learning/Introduccion_MLlib/Laboratorio_clustering_mllib.md)
+
+
 ## Módulo 7: Optimización y Mejores Prácticas
 
 ### Optimización de Consultas y Jobs en Databricks
