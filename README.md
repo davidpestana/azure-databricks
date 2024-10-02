@@ -210,10 +210,18 @@
 - [Programación y automatización de tareas](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/Automatizacion_tareas.md)
 - [Mejores prácticas en la gestión de procesos por lotes](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/Mejores_practicas_lotes.md)
 
+
+
 #### Laboratorio:
 - [Crear un pipeline de procesamiento de datos usando notebooks](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/Laboratorio_pipeline_lotes.md)
 - [Programar la ejecución de notebooks con Databricks Jobs](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/Laboratorio_programacion_notebooks.md)
-- [Monitoreo y depuración de pipelines de datos](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/Laboratorio_monitorizacion_pipelines.md)
+- [Monitoreo y depuración de pipelines de datos](Laboratorio_monitorizacion_pipelines.md)
+
+
+#### Recursos
+
+- [Recursos](./Modulo5_Ingesta_Transformacion_Datos/Ejecucion_Procesos_Lotes/recursos.md)
+
 
 ## Módulo 6: Análisis de Datos y Machine Learning
 
