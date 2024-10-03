@@ -279,6 +279,60 @@
 
 ---
 
+### Glosario de Términos Clave
+
+1. **Shuffle**:
+   - **Definición**: El proceso de redistribuir datos entre diferentes ejecutores o nodos en un clúster durante una operación distribuida, como `groupBy`, `join`, o `reduceByKey`. En el shuffle, los datos se reordenan y agrupan en nuevas particiones, lo que implica mover los datos a través de la red entre los nodos.
+   - **Impacto**: Es una de las operaciones más costosas en términos de rendimiento en Spark porque implica operaciones de escritura y lectura en disco y transferencia de datos a través de la red. Minimizar el shuffle es clave para optimizar las consultas.
+   - **Ejemplo**: Si haces un `join` entre dos grandes datasets, Spark puede realizar un shuffle para asegurarse de que las filas relacionadas se procesen en el mismo ejecutor.
+
+2. **Partición**:
+   - **Definición**: Las particiones son las unidades básicas de paralelización en Spark. Cada partición es un bloque de datos que se procesa en paralelo por un ejecutor. Cuantos más datos se puedan particionar y distribuir entre los ejecutores, más paralelismo y rendimiento se pueden lograr.
+   - **Impacto**: Un mal particionamiento (particiones muy grandes o muy pequeñas) puede causar desbalance en el uso de los recursos del clúster. Es importante tener un número adecuado de particiones para asegurar que todos los ejecutores trabajen de manera eficiente.
+   - **Ejemplo**: Una tabla particionada por fecha distribuye los datos según el valor de la fecha, lo que permite procesar solo un subconjunto de los datos.
+
+3. **Paralelismo**:
+   - **Definición**: En Spark, el paralelismo es la capacidad de ejecutar múltiples tareas al mismo tiempo utilizando varios núcleos de CPU. Cada partición de datos se procesa en paralelo por los ejecutores, maximizando la eficiencia del procesamiento distribuido.
+   - **Impacto**: Un paralelismo adecuado asegura que el clúster esté utilizando todos los recursos disponibles (núcleos y memoria) de manera óptima. Si el paralelismo es bajo, algunos núcleos pueden quedarse inactivos, y si es muy alto, se puede sobrecargar el clúster.
+   - **Ejemplo**: Ajustar `spark.default.parallelism` a 2 o 3 veces el número de núcleos del clúster es una buena práctica para un uso eficiente del paralelismo.
+
+4. **Ejecutor (Executor)**:
+   - **Definición**: Un ejecutor es una unidad de trabajo en Spark que ejecuta las tareas asignadas por el driver. Cada ejecutor tiene un conjunto de núcleos y memoria asignada, y es responsable de ejecutar tareas sobre las particiones de datos.
+   - **Impacto**: Configurar correctamente la cantidad de ejecutores, la memoria asignada y los núcleos disponibles por ejecutor es crucial para obtener un rendimiento óptimo en Spark.
+   - **Ejemplo**: Un clúster de Spark con 4 ejecutores y 8 núcleos por ejecutor puede procesar múltiples particiones de datos en paralelo.
+
+5. **Driver**:
+   - **Definición**: El driver es la instancia central que coordina la ejecución de una aplicación Spark. Es el responsable de crear el plan de ejecución, distribuir tareas a los ejecutores y recopilar los resultados.
+   - **Impacto**: El driver también utiliza memoria y recursos, por lo que es importante ajustar correctamente su configuración. Un driver con muy poca memoria puede tener problemas al manejar grandes volúmenes de datos.
+   - **Ejemplo**: El driver gestiona la comunicación entre los ejecutores y coordina las etapas de ejecución en Spark.
+
+6. **Autoscaling**:
+   - **Definición**: En Databricks, el autoscaling es la capacidad de un clúster para ajustar automáticamente su tamaño (número de nodos o instancias) en función de la carga de trabajo. Cuando la demanda aumenta, el clúster escala hacia arriba (añade más nodos), y cuando la carga disminuye, escala hacia abajo (reduce nodos).
+   - **Impacto**: El autoscaling optimiza el uso de recursos y reduce los costos al ajustar dinámicamente el tamaño del clúster según sea necesario.
+   - **Ejemplo**: Si un clúster con autoscaling tiene un mínimo de 2 nodos y un máximo de 10, cuando se ejecute un trabajo grande, el clúster puede agregar nodos adicionales temporalmente para manejar la carga.
+
+7. **Persistencia (Cache/Persist)**:
+   - **Definición**: La persistencia en Spark se refiere a almacenar datos en memoria (o en disco) para reutilizarlos en futuras operaciones sin tener que recalcularlos. Las opciones incluyen `cache()` (para almacenamiento en memoria) o `persist()` (con opciones de almacenamiento en memoria o disco).
+   - **Impacto**: Persistir datos permite ahorrar tiempo cuando un conjunto de datos se reutiliza en múltiples operaciones, ya que no es necesario recalcular los resultados en cada ejecución.
+   - **Ejemplo**: Cachear un dataset filtrado evita que Spark tenga que volver a procesar todas las filas en cada consulta.
+
+8. **Job (Trabajo)**:
+   - **Definición**: Un trabajo (job) en Spark es una unidad de trabajo que consiste en una serie de tareas distribuidas que se ejecutan en los ejecutores. Un job es generalmente el resultado de una acción como `count()` o `collect()`.
+   - **Impacto**: Un job se divide en múltiples etapas, y cada etapa consiste en tareas distribuidas que se ejecutan en paralelo. Monitorizar los jobs en Spark UI es clave para entender el rendimiento de la aplicación.
+   - **Ejemplo**: Al ejecutar una operación `groupBy` en un gran conjunto de datos, se desencadena un job que luego se divide en múltiples etapas.
+
+9. **Stage (Etapa)**:
+   - **Definición**: Un stage es un conjunto de tareas que pueden ejecutarse en paralelo en los ejecutores, dentro de un trabajo. Spark divide un job en varias etapas, y cada una corresponde a un conjunto de operaciones que se pueden ejecutar sin necesidad de un shuffle.
+   - **Impacto**: Identificar etapas lentas o desbalanceadas puede ayudar a optimizar el rendimiento. Las etapas generalmente se separan cuando se necesita realizar un shuffle o una operación de `reduce`.
+   - **Ejemplo**: Una operación de `map` en Spark se ejecuta como una sola etapa, pero una operación `join` que implica un shuffle puede dividirse en dos etapas.
+
+10. **Databricks Runtime**:
+    - **Definición**: El Databricks Runtime es una distribución de Apache Spark optimizada por Databricks. Incluye mejoras en rendimiento, conectividad con servicios de Azure, y herramientas adicionales como Delta Lake, MLflow y otros.
+    - **Impacto**: Usar la versión más reciente del Databricks Runtime asegura que se aprovechen las últimas optimizaciones y correcciones de errores.
+    - **Ejemplo**: Al usar Databricks Runtime, puedes acceder a características como **Photon** (un motor de procesamiento acelerado) o Delta Lake para manejar grandes volúmenes de datos transaccionales.
+
+---
+
 ## **Requerimientos de Recursos y Permisos para Alumnos**
 
 ### **Recursos en Azure (a ser proporcionados por la organización)**
